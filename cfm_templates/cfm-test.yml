@@ -71,3 +71,14 @@ Resources:
           Value: "IEA"
         - Key: "cohort"
           Value: "8"
+
+Outputs:
+  InfraPublicIP:
+    Description: The public IP of DarkInfrastructure
+    Value:  !GetAtt DarkInfrastructure.PublicIp
+  StagingPublicIP:
+    Description: The public IP of DarkStaging
+    Value:  !GetAtt DarkStaging.PublicIp
+  ProdPublicIP:
+    Description: The public IP of DarkProd
+    Value: !GetAtt DarkProd.PublicIp
