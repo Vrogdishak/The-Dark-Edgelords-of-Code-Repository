@@ -1,5 +1,5 @@
 Resources:
-  TDELoC-infrastructure:
+  DarkInfrastructure:
     Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t2.medium
@@ -13,7 +13,7 @@ Resources:
           Value: "IEA"
         - Key: "cohort"
           Value: "8"
-  TDELoC-staging:
+  DarkStaging:
     Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t2.micro
@@ -27,7 +27,7 @@ Resources:
           Value: "IEA"
         - Key: "cohort"
           Value: "8"
-  TDELoC-prod:
+  DarkProd:
     Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t2.micro
@@ -57,7 +57,7 @@ Resources:
         - Key: "cohort"
           Value: "8"
   DefaultSecurityGroup:
-    Type: "AWS::EC2:SecurityGroup"
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupDescription: Default SecurityGroup
       GroupName: TDELoC-Default
