@@ -9,6 +9,8 @@ Resources:
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
       Tags:
+        - Key: Name
+          Value: TDLoC-Infrastructure
         - Key: "course"
           Value: "IEA"
         - Key: "cohort"
@@ -23,6 +25,8 @@ Resources:
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
       Tags:
+        - Key: Name
+          Value: TDLoC-Staging
         - Key: "course"
           Value: "IEA"
         - Key: "cohort"
@@ -37,6 +41,8 @@ Resources:
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
       Tags:
+        - Key: Name
+          Value: TDLoC-Prod
         - Key: "course"
           Value: "IEA"
         - Key: "cohort"
