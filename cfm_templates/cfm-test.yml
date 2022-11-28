@@ -48,8 +48,24 @@ Resources:
       GroupName: TDELoC-Infrastructure
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 22, 80, 8080, 443, 8085
-          ToPort: 22, 80, 8080, 443, 8085
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8085
+          ToPort: 8085
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: "course"
@@ -63,8 +79,12 @@ Resources:
       GroupName: TDELoC-Default
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 22, 8088
-          ToPort: 22, 8088
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8088
+          ToPort: 8088
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: "course"
