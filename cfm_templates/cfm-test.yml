@@ -1,6 +1,6 @@
 Resources:
   TDELoC-infrastructure:
-    Type: 'AWS::EC2::Instance'
+    Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t2.medium
       SecurityGroups:
@@ -8,26 +8,41 @@ Resources:
       ImageId: ami-00a0e0b890ae17d65
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
+      Tags:
+        - Key: "course"
+          Value: "IEA"
+        - Key: "cohort"
+          Value: "8"
   TDELoC-staging:
-    Type: 'AWS::EC2::Instance'
+    Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
-      - !Ref DefaultSecurityGroup
+        - !Ref DefaultSecurityGroup
       ImageId: ami-00a0e0b890ae17d65
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
+      Tags:
+        - Key: "course"
+          Value: "IEA"
+        - Key: "cohort"
+          Value: "8"
   TDELoC-prod:
-    Type: 'AWS::EC2::Instance'
+    Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
-      - !Ref DefaultSecurityGroup
+        - !Ref DefaultSecurityGroup
       ImageId: ami-00a0e0b890ae17d65
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
+      Tags:
+        - Key: "course"
+          Value: "IEA"
+        - Key: "cohort"
+          Value: "8"
   InfraInstanceSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupDescription: Infrastructure SecurityGroup
       GroupName: TDELoC-Infrastructure
@@ -36,8 +51,13 @@ Resources:
           FromPort: 22, 80, 8080, 443, 8085
           ToPort: 22, 80, 8080, 443, 8085
           CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: "course"
+          Value: "IEA"
+        - Key: "cohort"
+          Value: "8"
   DefaultSecurityGroup:
-    Type: 'AWS::EC2:SecurityGroup'
+    Type: "AWS::EC2:SecurityGroup"
     Properties:
       GroupDescription: Default SecurityGroup
       GroupName: TDELoC-Default
@@ -46,3 +66,8 @@ Resources:
           FromPort: 22, 8088
           ToPort: 22, 8088
           CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: "course"
+          Value: "IEA"
+        - Key: "cohort"
+          Value: "8"
