@@ -67,15 +67,15 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 172.16.1.209/32
+          CidrIp: 44.207.13.147/32
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 172.16.0.114/32
+          CidrIp: 44.208.120.75/32
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 172.16.0.209/32
+          CidrIp: 3.234.39.123/32
       Tags:
         - Key: "course"
           Value: "IEA"
