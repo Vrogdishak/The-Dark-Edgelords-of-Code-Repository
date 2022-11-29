@@ -1,0 +1,45 @@
+---
+- name: Bamboo install
+  hosts:
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - name:
+    command:
+      cmd: pip3 install docker
+
+  - name: start Docker
+    service:
+      name: docker
+      state: started
+  
+  - name: create docker volume
+    command:
+      cmd: docker volume create --name bamboovolume
+  
+  - name: Docker run
+    command:
+      cmd: docker run --group-add $(getent group docker | cut -d ":" -f 3) -v /var/run/docker.sock:/var/run/docker.sock -v bambooVolume:<bamboo_home> --name="bamboo" --init -d -p 54663:54663 -p 8085:8085 jrrickerson/capstone-bamboo
+
+  #- name: pull default Docker image
+    #docker_image:
+      #name: jrrickerson/capstone-bamboo
+      #source: pull
+      #state: present
+
+  #- name: change mode for docker.sock
+    #command:
+      #cmd: sudo
+
+  #- name: create a container
+    #docker_container:
+      #name: bamboo
+      #image: jrrickerson/capstone-bamboo
+      #state: started
+      #restart: always
+    
+    #ports:
+      #54663
+      #8085
