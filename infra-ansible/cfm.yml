@@ -5,6 +5,7 @@ Resources:
       InstanceType: t2.medium
       SecurityGroups:
         - !Ref InfraInstanceSecurityGroup
+        - !Ref SSHSecurityGroup
       ImageId: ami-00a0e0b890ae17d65
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
@@ -21,6 +22,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - !Ref DefaultSecurityGroup
+        - !Ref SSHSecurityGroup
       ImageId: ami-00a0e0b890ae17d65
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
@@ -37,6 +39,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - !Ref DefaultSecurityGroup
+        - !Ref SSHSecurityGroup
       ImageId: ami-00a0e0b890ae17d65
       KeyName: Dark-Lords08
       AvailabilityZone: us-east-1a
@@ -47,16 +50,43 @@ Resources:
           Value: "IEA"
         - Key: "cohort"
           Value: "8"
+  SSHSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: SSH Security Group
+      GroupName: TDELoC-SSH
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 198.255.180.29/32
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 54.160.51.6/32
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 172.16.1.209/32
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 172.16.0.114/32
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 172.16.0.209/32
+      Tags:
+        - Key: "course"
+          Value: "IEA"
+        - Key: "cohort"
+          Value: "8"
   InfraInstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupDescription: Infrastructure SecurityGroup
       GroupName: TDELoC-Infrastructure
       SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
@@ -84,10 +114,6 @@ Resources:
       GroupDescription: Default SecurityGroup
       GroupName: TDELoC-Default
       SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 8088
           ToPort: 8088
