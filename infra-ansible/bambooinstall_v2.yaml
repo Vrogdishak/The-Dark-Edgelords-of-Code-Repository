@@ -1,0 +1,29 @@
+---
+- name: Bamboo Install
+  hosts: TDLoC-Infrastructure
+
+  tasks:
+
+  - name:
+    community.docker.docker_volume:
+      name: bambooVolume
+      state: present
+
+  - name: Get Docker Group ID
+    command: getent group docker | cut -d ":" -f 3
+    register: groupID
+
+  - name:
+    community.docker.docker_container:
+      name: bamboo
+      image: jrrickerson/capstone-bamboo
+      state: started
+      detach: true
+      group: {{ groupID.stdout }}
+      restart_policy: always
+      devices:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "bambooVolume:/var/atlassian/application-data/bamboo"
+      ports:
+      - "54663:54663"
+      - "8085:8085"
