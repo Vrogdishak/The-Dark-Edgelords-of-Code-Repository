@@ -1,6 +1,6 @@
 ---
 - name: Bamboo install
-  hosts:
+  hosts: TDLoC-Infrastructure
   become: yes
   become_user: root
 
@@ -21,7 +21,7 @@
   
   - name: Docker run
     command:
-      cmd: docker run --group-add $(getent group docker | cut -d ":" -f 3) -v /var/run/docker.sock:/var/run/docker.sock -v bambooVolume:<bamboo_home> --name="bamboo" --init -d -p 54663:54663 -p 8085:8085 jrrickerson/capstone-bamboo
+      cmd: docker run --group-add $(getent group docker | cut -d ":" -f 3) -v /var/run/docker.sock:/var/run/docker.sock -v bambooVolume:/var/atlassian/application-data/bamboo --name="bamboo" --init -d -p 54663:54663 -p 8085:8085 jrrickerson/capstone-bamboo
 
   #- name: pull default Docker image
     #docker_image:
