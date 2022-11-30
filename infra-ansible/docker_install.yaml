@@ -1,0 +1,20 @@
+---
+- name: Install Docker and Docker-Compose
+  hosts: docker
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - name: apt update and docker compose install
+    command:
+      cmd: sudo apt-get update && sudo apt-get install docker-compose-plugin python
+
+  - name: Install Docker
+    command:
+      cmd: pip3 install docker
+
+  - name: Start Docker
+    service:
+      name: docker
+      state: started
