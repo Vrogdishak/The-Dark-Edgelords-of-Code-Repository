@@ -1,20 +1,26 @@
 ---
 - name: Install Docker and Docker-Compose
   hosts: docker
-  become: true
-  become_user: root
 
   tasks:
 
-  - name: apt update and docker compose install
-    command: apt-get update && sudo apt-get install docker-compose-plugin python
-    become: true
-    become_user: root
+  - name: Apt Update
+    apt:
+      update_cache: yes
 
   - name: Install Docker
-    command: pip3 install docker
-    become: true
-    become_user: root
+    apt:
+      name: docker-compose-plugin
+      state: present
+
+  - name: Install Python
+    apt:
+      name: python
+      state: present
+      
+  - name: Install Docker
+    pip:
+      name: docker
 
   - name: Start Docker
     service:
