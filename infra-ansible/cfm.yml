@@ -1,3 +1,4 @@
+Description: "The Dark Edge Lords of Code (TDELoC) Stack."
 Resources:
   DarkInfrastructure:
     Type: "AWS::EC2::Instance"
@@ -128,9 +129,18 @@ Outputs:
   InfraPublicIP:
     Description: The public IP of DarkInfrastructure
     Value:  !GetAtt DarkInfrastructure.PublicIp
+  InfraPublicDNS:
+    Description: The public DNS Name of DarkInfrastructure
+    Value:  !GetAtt DarkInfrastructure.DNSName
   StagingPublicIP:
     Description: The public IP of DarkStaging
     Value:  !GetAtt DarkStaging.PublicIp
+  StagingPublicDNS:
+    Description: The public DNS Name of DarkStaging
+    Value:  !GetAtt DarkStaging.DNSName
   ProdPublicIP:
     Description: The public IP of DarkProd
     Value: !GetAtt DarkProd.PublicIp
+  ProdPublicDNS:
+    Description: The public DNS Name of DarkProd
+    Value: !GetAtt DarkProd.DNSName
