@@ -14,7 +14,7 @@
     command:
       cmd: pip3 install docker
 
-  - name: start Docker
+  - name: Start Docker
     service:
       name: docker
       state: started
