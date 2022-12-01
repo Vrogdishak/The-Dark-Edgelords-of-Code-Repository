@@ -1,7 +1,7 @@
 [docker]
-TDLoC-Infrastructure ansible_host=ec2-52-90-137-24.compute-1.amazonaws.com
-TDLoC-Prod ansible_host=ec2-44-203-253-111.compute-1.amazonaws.com 
-TDLoC-Staging ansible_host=ec2-52-23-159-201.compute-1.amazonaws.com 
+TDLoC-Infrastructure ansible_host=ec2-3-84-17-215.compute-1.amazonaws.com
+TDLoC-Prod ansible_host=ec2-54-209-90-106.compute-1.amazonaws.com
+TDLoC-Staging ansible_host=ec2-44-202-229-125.compute-1.amazonaws.com
 
 [all:vars]
 ansible_connection=ssh
