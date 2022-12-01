@@ -1,0 +1,16 @@
+---
+- name: Bamboo Install
+  hosts: TDLoC-Infrastructure
+
+  tasks:
+
+  - name: Reset Volume
+    community.docker.docker_volume:
+      name: bambooVolume
+      state: present
+      recreate: always
+
+  - name: Restart Container
+    community.docker.docker_container:
+      name: bamboo
+      restart: true
