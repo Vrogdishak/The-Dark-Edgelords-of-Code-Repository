@@ -17,12 +17,15 @@ services:
        - db
      image: wordpress:latest
      ports:
-       - "80:80"
+       - 8088:80
      restart: always
+     volumes:
+      - www_data:/var/www/html
      environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_USER: wordpress
-       WORDPRESS_DB_PASSWORD: wordpress
-       WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
 volumes:
     db_data: {}
+    www_data: {}
