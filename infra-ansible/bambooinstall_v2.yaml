@@ -9,21 +9,17 @@
       name: bambooVolume
       state: present
 
-  - name: Get Docker Group ID
-    command: getent group docker | cut -d ":" -f 3
-    register: groupID
-
   - name:
     community.docker.docker_container:
       name: bamboo
       image: jrrickerson/capstone-bamboo
       state: started
       detach: true
-      group: {{ groupID.stdout }}
+      groups: docker
       restart_policy: always
-      devices:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "bambooVolume:/var/atlassian/application-data/bamboo"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - bambooVolume:/var/atlassian/application-data/bamboo
       ports:
-      - "54663:54663"
-      - "8085:8085"
+        - "54663:54663"
+        - "8085:8085"
