@@ -77,6 +77,10 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 3.234.39.123/32
+        # - IpProtocol: tcp
+        #   FromPort: 22
+        #   ToPort: 22
+        #   CidrIp: !GetAtt DarkInfrastructure.PublicIp
       Tags:
         - Key: "course"
           Value: "IEA"
