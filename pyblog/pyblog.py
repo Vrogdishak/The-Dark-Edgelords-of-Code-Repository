@@ -2,7 +2,8 @@
 """
 find the sun
 """
-import os
+# import os
+import re
 import requests
 
 # WORDPRESS_USERNAME = os.environ["WORDPRESS_USERNAME"]
@@ -25,8 +26,14 @@ def getPostTitles():
         print(str(i) + ": " + title)
 
 def getSinglePost(postID):
-    response = requests.get(WORDPRESS_URL+"/wp/v2/posts/"+postID)
+    """ """
+    response = requests.get(WORDPRESS_URL+"/wp/v2/posts/")
     data = response.json()
+    content = data[postID]["content"]["rendered"]
+
+    out = re.sub("<[^>]*>", "", content)
+
+    print(out)
 
 # data = response.json()
 
@@ -39,3 +46,4 @@ def getSinglePost(postID):
 # print(f"Blog Post Date: \n " + "-" * 10 + "\n" + date)
 
 getPostTitles()
+getSinglePost(0)
