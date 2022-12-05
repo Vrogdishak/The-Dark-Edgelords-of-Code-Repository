@@ -1,49 +1,55 @@
-#!/usr/bin/env python3
-"""
-find the sun
-"""
-# import os
+import json
+import os
 import re
 import requests
+from requests.auth import HTTPBasicAuth
 
-# WORDPRESS_USERNAME = os.environ["WORDPRESS_USERNAME"]
-# WORDPRESS_PASSWORD = os.environ["WORDPRESS_PASSWORD"]
-# WORDPRESS_URL = os.environ["WORDPRESS_URL"]
-WORDPRESS_URL = "http://ec2-44-202-229-125.compute-1.amazonaws.com:8088/wp-json"
+WORDPRESS_USER = os.environ["WORDPRESS_USER"]
+WORDPRESS_PASSWORD = os.environ["WORDPRESS_PASSWORD"]
+WORDPRESS_URL = os.environ["WORDPRESS_URL"]
 
-# MENU
-# - List All Post Titles
-# - Retreive A Post
-# - Make a Post
-# - Exit
-
-def getPostTitles():
-    response = requests.get(WORDPRESS_URL+"/wp/v2/posts")
+def get_all():
+    """ Retreive All Posts """
+    response = requests.get(WORDPRESS_URL+"wp-json/wp/v2/posts")
     data = response.json()
-    
+    return data
+
+def get_post_titles():
+    """ Retreive Post Titles """
+    titles = ""
+    data = get_all()
     for i in range(len(data)):
-        title = data[i]["title"]["rendered"]
-        print(str(i) + ": " + title)
+        titles += str(i) + ". " + data[i]["title"]["rendered"] + "\n"
+        print(str(i))
+    return titles
 
-def getSinglePost(postID):
-    """ """
-    response = requests.get(WORDPRESS_URL+"/wp/v2/posts/")
-    data = response.json()
-    content = data[postID]["content"]["rendered"]
+def get_post_content(post_number):
+    """ Retrieve Post Content """
+    data = get_all()
+    title = data[post_number]["title"]["rendered"]
+    content = data[post_number]["content"]["rendered"]
+    # RegEx to Strip HTML Tags
+    body = re.sub("<[^>]*>", "", content)
+    date = data[post_number]["date"]
+    formatted_post = title + "    " + date + "\n" + body
+    print(formatted_post)
+    return formatted_post
 
-    out = re.sub("<[^>]*>", "", content)
+def post_post():
+    """ Post a Post """
+    basic = HTTPBasicAuth(WORDPRESS_USER, WORDPRESS_PASSWORD)
+    payload = {
+        "title": "this is a title here",
+        "content": "I am a Paragraph"
+    }
+    post = requests.post(
+        WORDPRESS_URL+"wp-json/wp/v2/posts",
+        auth=basic,
+        params=payload
+    )
+    print(WORDPRESS_USER)
+    print(post.status_code)
 
-    print(out)
 
-# data = response.json()
-
-# title = data["title"]["rendered"]
-# content = data["content"]["rendered"]
-# date = data["date"]
-
-# print(f"Blog Post Title: \n " + "-" * 10 + "\n" + title + "\n")
-# print(f"Blog Post Content: \n " + "-" * 10 + "\n" + content)
-# print(f"Blog Post Date: \n " + "-" * 10 + "\n" + date)
-
-getPostTitles()
-getSinglePost(0)
+#get_post_content(0)
+post_post()
