@@ -5,10 +5,10 @@
 
   - name: Deploy Stack
     amazon.aws.cloudformation:
-      stack_name: "TheDarkEdgeLordsofCode"
+      stack_name: "AnsibleTest"
       state: present
       region: us-east-1
-      template: "./cfm.yml"
+      template: "./cfm-TEST.yaml"
       on_create_failure: DELETE
       tags:
         cohort: "8"
@@ -16,7 +16,7 @@
   
   - name: Get summary information about a stack
     amazon.aws.cloudformation_info:
-      stack_name: "TheDarkEdgeLordsofCode"
+      stack_name: "AnsibleTest"
       region: us-east-1
     register: stackOutput
 
@@ -26,17 +26,17 @@
 
   - name: Assign new Infra Inventory
     add_host:
-      name: "{{ stackOutput['cloudformation']['TheDarkEdgeLordsofCode']['stack_outputs']['InfraPublicDNS'] }}"
+      name: "{{ stackOutput['cloudformation']['AnsibleTest']['stack_outputs']['InfraPublicDNS'] }}"
       groups:
       - cfm
       - infra
   - name: Assign new Staging Inventory
     add_host:
-      name: "{{ stackOutput['cloudformation']['TheDarkEdgeLordsofCode']['stack_outputs']['StagingPublicDNS'] }}"
+      name: "{{ stackOutput['cloudformation']['AnsibleTest']['stack_outputs']['StagingPublicDNS'] }}"
       groups: cfm
   - name: Assign new Prod Inventory
     add_host:
-      name: "{{ stackOutput['cloudformation']['TheDarkEdgeLordsofCode']['stack_outputs']['ProdPublicDNS'] }}"
+      name: "{{ stackOutput['cloudformation']['AnsibleTest']['stack_outputs']['ProdPublicDNS'] }}"
       groups: cfm
 
 - name: Deploy Docker & Docker Compose
@@ -94,9 +94,9 @@
       name: bambooVolume
       state: present
 
-  - name:
+  - name: Run Bamboo Docker Container
+    become: yes
     community.docker.docker_container:
-      become: yes
       name: bamboo
       image: jrrickerson/capstone-bamboo
       state: started
