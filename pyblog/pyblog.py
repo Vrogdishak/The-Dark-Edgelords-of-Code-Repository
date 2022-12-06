@@ -39,8 +39,9 @@ def post_post():
     """ Post a Post """
     basic = HTTPBasicAuth(WORDPRESS_USER, WORDPRESS_PASSWORD)
     payload = {
-        "title": "this is a title here",
-        "content": "I am a Paragraph"
+        "title": "this is a title here NEW",
+        "content": "I am a Paragraph",
+        "status": "publish"
     }
     post = requests.post(
         WORDPRESS_URL+"wp-json/wp/v2/posts",
