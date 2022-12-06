@@ -20,10 +20,6 @@
       region: us-east-1
     register: stackOutput
 
-  # - name: print
-  #   debug:
-  #     msg: "{{ stackOutput['cloudformation']['TheDarkEdgeLordsofCode']['stack_outputs']['InfraPublicDNS'] }}"
-
   - name: Assign new Infra Inventory
     add_host:
       name: "{{ stackOutput['cloudformation']['TheDarkEdgeLordsofCode']['stack_outputs']['InfraPublicDNS'] }}"
