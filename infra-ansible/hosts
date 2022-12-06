@@ -1,0 +1,3 @@
+[all:vars]
+ansible_ssh_private_key_file= # PEM FILE LOCATION HERE #
+ansible_user=ubuntu

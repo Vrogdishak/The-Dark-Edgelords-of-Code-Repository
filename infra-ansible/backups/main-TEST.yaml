@@ -1,0 +1,111 @@
+---
+- name: Deploy Cloudformation Stack
+  hosts: localhost
+  tasks:
+
+  - name: Deploy Stack
+    amazon.aws.cloudformation:
+      stack_name: "AnsibleTest"
+      state: present
+      region: us-east-1
+      template: "./cfm-TEST.yaml"
+      on_create_failure: DELETE
+      tags:
+        cohort: "8"
+        course: "IEA"
+  
+  - name: Get summary information about a stack
+    amazon.aws.cloudformation_info:
+      stack_name: "AnsibleTest"
+      region: us-east-1
+    register: stackOutput
+
+  # - name: print
+  #   debug:
+  #     msg: "{{ stackOutput['cloudformation']['TheDarkEdgeLordsofCode']['stack_outputs']['InfraPublicDNS'] }}"
+
+  - name: Assign new Infra Inventory
+    add_host:
+      name: "{{ stackOutput['cloudformation']['AnsibleTest']['stack_outputs']['InfraPublicDNS'] }}"
+      groups:
+      - cfm
+      - infra
+  - name: Assign new Staging Inventory
+    add_host:
+      name: "{{ stackOutput['cloudformation']['AnsibleTest']['stack_outputs']['StagingPublicDNS'] }}"
+      groups: cfm
+  - name: Assign new Prod Inventory
+    add_host:
+      name: "{{ stackOutput['cloudformation']['AnsibleTest']['stack_outputs']['ProdPublicDNS'] }}"
+      groups: cfm
+
+- name: Deploy Docker & Docker Compose
+  hosts: cfm
+
+  tasks:
+  - name: Add Apt Repo
+    become: yes
+    ansible.builtin.apt_repository:
+      repo: deb http://archive.ubuntu.com/ubuntu bionic universe
+      state: present
+      filename: docker-compose
+
+  - name: Apt Update
+    become: yes
+    ansible.builtin.apt:
+      update_cache: yes
+
+  - name: Install Docker-Compose
+    become: yes
+    ansible.builtin.apt:
+      name: docker-compose
+      state: present
+
+  - name: Install Python
+    become: yes
+    ansible.builtin.apt:
+      name: python
+      state: present
+
+  - name: install Python pip3
+    become: yes
+    ansible.builtin.apt:
+      name: python3-pip
+
+  - name: Install Docker
+    become: yes
+    ansible.builtin.pip:
+      name: docker
+      executable: pip3
+
+  - name: Start Docker
+    become: yes
+    service:
+      name: docker
+      state: started
+
+- name: Deploy Bamboo
+  hosts: infra
+
+  tasks:
+  - name: Create Volume
+    become: yes
+    community.docker.docker_volume:
+      name: bambooVolume
+      state: present
+
+  - name: Run Bamboo Docker Container
+    become: yes
+    community.docker.docker_container:
+      name: bamboo
+      image: jrrickerson/capstone-bamboo
+      state: started
+      detach: true
+      groups: docker
+      restart_policy: always
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - bambooVolume:/var/atlassian/application-data/bamboo
+      ports:
+        - "54663:54663"
+        - "8085:8085"
