@@ -54,7 +54,8 @@ def post_post(post_title, file_location):
         timeout=5
     )
     print(WORDPRESS_USER)
-    print(post.status_code)
+    
+    return post.status_code
 
 def read_file(filename):
     try:
@@ -67,6 +68,7 @@ def read_file(filename):
     return contents_storage
 
 def blog_menu():
+
     while True: 
         print("""
         Welcome to the Dark Edgelords of Codes Blog program. 
