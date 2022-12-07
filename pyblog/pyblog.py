@@ -1,4 +1,6 @@
-import json
+#!/usr/bin/env python3
+""" TDELoC Pyblog """
+
 import os
 import re
 import requests
@@ -10,7 +12,7 @@ WORDPRESS_URL = os.environ["WORDPRESS_URL"]
 
 def get_all():
     """ Retreive All Posts """
-    response = requests.get(WORDPRESS_URL+"wp-json/wp/v2/posts")
+    response = requests.get(WORDPRESS_URL+"wp-json/wp/v2/posts", timeout=5)
     data = response.json()
     return data
 
@@ -39,13 +41,15 @@ def post_post():
     """ Post a Post """
     basic = HTTPBasicAuth(WORDPRESS_USER, WORDPRESS_PASSWORD)
     payload = {
-        "title": "this is a title here",
-        "content": "I am a Paragraph"
+        "title": "this is a title here NEW",
+        "content": "I am a Paragraph",
+        "status": "publish"
     }
     post = requests.post(
         WORDPRESS_URL+"wp-json/wp/v2/posts",
         auth=basic,
-        params=payload
+        params=payload,
+        timeout=5
     )
     print(WORDPRESS_USER)
     print(post.status_code)
