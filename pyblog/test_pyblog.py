@@ -1,5 +1,6 @@
 from pyblog import *
 
+
 def test_get_all():
 	result = get_all()
 	assert type(result) == list
@@ -13,9 +14,12 @@ def test_get_post_content():
     assert type(result) == str
 
 def test_post_post():
-    result = post_post("My existence is a test from the dark lords", "test_post_body")
+    result = post_post("test_post_body")
     assert result == 201
 
 def test_read_file():
     result = read_file("test_post_body")
-    assert type(result) == str
+    assert type(result) == tuple
+
+def test_blog_menu():
+    pass

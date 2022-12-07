@@ -11,11 +11,13 @@ WORDPRESS_USER = os.environ["WORDPRESS_USER"]
 WORDPRESS_PASSWORD = os.environ["WORDPRESS_PASSWORD"]
 WORDPRESS_URL = os.environ["WORDPRESS_URL"]
 
+
 def get_all():
     """ Retreive All Posts """
     response = requests.get(WORDPRESS_URL+"wp-json/wp/v2/posts", timeout=5)
     data = response.json()
     return data
+
 
 def get_post_titles():
     """ Retreive Post Titles """
@@ -23,10 +25,11 @@ def get_post_titles():
     data = get_all()
     for i in range(len(data)):
         titles = titles + str(i) + ". " + data[i]["title"]["rendered"] + "\n"
-        #print(titles)
-        #print(data[i]["title"]["rendered"])
-        #print(str(i))
+        # print(titles)
+        # print(data[i]["title"]["rendered"])
+        # print(str(i))
     return titles
+
 
 def get_post_content(post_number):
     """ Retrieve Post Content """
@@ -39,6 +42,7 @@ def get_post_content(post_number):
     formatted_post = title + "    " + date + "\n" + body
     print(formatted_post)
     return formatted_post
+
 
 def post_post(file_location):
     """ Post a Post """
@@ -58,8 +62,9 @@ def post_post(file_location):
         timeout=5
     )
     print(WORDPRESS_USER)
-    
+
     return post.status_code
+
 
 def read_file(filename):
     try:
@@ -75,7 +80,7 @@ def read_file(filename):
 
 def blog_menu():
 
-    while True: 
+    while True:
         print("""
         Welcome to the Dark Edgelords of Codes Blog program. 
         Please make a selection from our Dark Menu:
@@ -86,20 +91,23 @@ def blog_menu():
         """)
         user_selection = input("Enter a number --->  ")
 
-        if user_selection == "1": 
+        if user_selection == "1":
             print(get_post_titles())
         elif user_selection == "2":
             user_selection2 = int(input("Please select a post number: "))
             get_post_content(user_selection2)
         elif user_selection == "3":
-            file_location = input("Please enter a file name with an absolute path: ")
+            file_location = input(
+                "Please enter a file name with an absolute path: ")
             post_post(file_location)
         elif user_selection == "4":
-            print("May you find your way through the darkness that no one else can understand.")
+            print(
+                "May you find your way in the darkness that no one else can understand.")
             break       
 
-#get_post_titles()
-#get_post_content(0)
-#post_post()
-#print(read_file("/home/rknepper/edgepost"))
-blog_menu()
+
+# get_post_titles()
+# get_post_content(0)
+# post_post()
+# print(read_file("/home/rknepper/edgepost"))
+# blog_menu()
