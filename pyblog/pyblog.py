@@ -10,7 +10,7 @@ WORDPRESS_URL = os.environ["WORDPRESS_URL"]
 
 def get_all():
     """ Retreive All Posts """
-    response = requests.get(WORDPRESS_URL+"wp-json/wp/v2/posts")
+    response = requests.get(WORDPRESS_URL+"wp-json/wp/v2/posts", timeout=5)
     data = response.json()
     return data
 
@@ -46,7 +46,8 @@ def post_post():
     post = requests.post(
         WORDPRESS_URL+"wp-json/wp/v2/posts",
         auth=basic,
-        params=payload
+        params=payload,
+        timeout=5
     )
     print(WORDPRESS_USER)
     print(post.status_code)
