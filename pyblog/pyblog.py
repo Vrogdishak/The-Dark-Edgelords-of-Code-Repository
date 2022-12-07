@@ -1,4 +1,6 @@
-import json
+#!/usr/bin/env python3
+""" TDELoC Pyblog """
+
 import os
 import re
 import requests
