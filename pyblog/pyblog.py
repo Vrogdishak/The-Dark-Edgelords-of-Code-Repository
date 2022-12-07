@@ -21,8 +21,10 @@ def get_post_titles():
     titles = ""
     data = get_all()
     for i in range(len(data)):
-        titles += str(i) + ". " + data[i]["title"]["rendered"] + "\n"
-        print(str(i))
+        titles = titles + str(i) + ". " + data[i]["title"]["rendered"] + "\n"
+        #print(titles)
+        #print(data[i]["title"]["rendered"])
+        #print(str(i))
     return titles
 
 def get_post_content(post_number):
@@ -37,12 +39,12 @@ def get_post_content(post_number):
     print(formatted_post)
     return formatted_post
 
-def post_post():
+def post_post(post_title, file_location):
     """ Post a Post """
     basic = HTTPBasicAuth(WORDPRESS_USER, WORDPRESS_PASSWORD)
     payload = {
-        "title": "this is a title here NEW",
-        "content": "I am a Paragraph",
+        "title": post_title,
+        "content": read_file(file_location),
         "status": "publish"
     }
     post = requests.post(
@@ -64,6 +66,35 @@ def read_file(filename):
         return
     return contents_storage
 
+def blog_menu():
+    while True: 
+        print("""
+        Welcome to the Dark Edgelords of Codes Blog program. 
+        Please make a selection from our Dark Menu:
+        1. Get post Titles
+        2. Get contents of a post
+        3. Make a new post
+        4. Exit program
+        """)
+        user_selection = input("Enter a number --->  ")
+
+        
+        if user_selection == "1": 
+            print(get_post_titles())
+        elif user_selection == "2":
+            user_selection2 = int(input("Please select a post number: "))
+            get_post_content(user_selection2)
+        elif user_selection == "3":
+            new_title = input("Please enter a dark title: ")
+            file_location = input("Please enter a file name with an absolute path: ")
+            post_post(new_title, file_location)
+        elif user_selection == "4":
+            print("May you find your way through the darkness that no one else can understand.")
+            break
+        
+
+#get_post_titles()
 #get_post_content(0)
 #post_post()
-print(read_file("/home/rknepper/edgepost"))
+#print(read_file("/home/rknepper/edgepost"))
+blog_menu()

@@ -13,5 +13,5 @@ def test_get_post_content():
     assert type(result) == str
 
 def test_read_file():
-    result = read_file("~/edgepost")
+    result = read_file("/home/rknepper/edgepost")
     assert type(result) == str
