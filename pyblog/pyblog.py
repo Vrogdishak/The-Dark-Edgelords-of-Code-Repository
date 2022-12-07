@@ -54,6 +54,14 @@ def post_post():
     print(WORDPRESS_USER)
     print(post.status_code)
 
+def read_file(filename):
+    try:
+        file_contents = open(filename, "r")
+    except FileNotFoundError:
+        print("File not found, please enter a valid file name.")
+        return
+    return file_contents.read()
 
 #get_post_content(0)
-post_post()
+#post_post()
+print(read_file("/home/rknepper/edgepos"))

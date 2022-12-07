@@ -11,3 +11,7 @@ def test_get_post_titles():
 def test_get_post_content():
     result = get_post_content(1)
     assert type(result) == str
+
+def test_read_file():
+    result = read_file("~/edgepost")
+    assert type(result) == str
