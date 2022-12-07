@@ -57,11 +57,13 @@ def post_post():
 def read_file(filename):
     try:
         file_contents = open(filename, "r")
+        contents_storage = file_contents.read()
+        file_contents.close()
     except FileNotFoundError:
         print("File not found, please enter a valid file name.")
         return
-    return file_contents.read()
+    return contents_storage
 
 #get_post_content(0)
 #post_post()
-print(read_file("/home/rknepper/edgepos"))
+print(read_file("/home/rknepper/edgepost"))
