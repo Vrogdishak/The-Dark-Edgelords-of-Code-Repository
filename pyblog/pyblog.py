@@ -5,6 +5,7 @@ import os
 import re
 import requests
 from requests.auth import HTTPBasicAuth
+from datetime import datetime
 
 WORDPRESS_USER = os.environ["WORDPRESS_USER"]
 WORDPRESS_PASSWORD = os.environ["WORDPRESS_PASSWORD"]
@@ -39,12 +40,15 @@ def get_post_content(post_number):
     print(formatted_post)
     return formatted_post
 
-def post_post(post_title, file_location):
+def post_post(file_location):
     """ Post a Post """
+    date = datetime.now()
     basic = HTTPBasicAuth(WORDPRESS_USER, WORDPRESS_PASSWORD)
+    content = read_file(file_location)
     payload = {
-        "title": post_title,
-        "content": read_file(file_location),
+        "title": content[1],
+        "content": content[0],
+        "date": date,
         "status": "publish"
     }
     post = requests.post(
@@ -60,12 +64,14 @@ def post_post(post_title, file_location):
 def read_file(filename):
     try:
         file_contents = open(filename, "r")
+        title = file_contents.readline().strip("\n")
         contents_storage = file_contents.read()
         file_contents.close()
     except FileNotFoundError:
         print("File not found, please enter a valid file name.")
         return
-    return contents_storage
+    return contents_storage, title
+
 
 def blog_menu():
 
@@ -80,20 +86,17 @@ def blog_menu():
         """)
         user_selection = input("Enter a number --->  ")
 
-        
         if user_selection == "1": 
             print(get_post_titles())
         elif user_selection == "2":
             user_selection2 = int(input("Please select a post number: "))
             get_post_content(user_selection2)
         elif user_selection == "3":
-            new_title = input("Please enter a dark title: ")
             file_location = input("Please enter a file name with an absolute path: ")
-            post_post(new_title, file_location)
+            post_post(file_location)
         elif user_selection == "4":
             print("May you find your way through the darkness that no one else can understand.")
-            break
-        
+            break       
 
 #get_post_titles()
 #get_post_content(0)
