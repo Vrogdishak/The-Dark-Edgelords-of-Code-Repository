@@ -15,7 +15,7 @@ services:
        driver: "splunk"
        options:
         splunk-token: "f1b72e61-99a7-4ecf-b214-1eecfcb14e70"
-        splunk-url: "https://prd-p-a598i.splunkcloud.com:8088/services/collector"
+        splunk-url: "https://prd-p-a598i.splunkcloud.com:8088"
         splunk-insecureskipverify: "true"
 
    wordpress:
@@ -39,7 +39,7 @@ services:
       driver: "splunk"
       options:
         splunk-token: "f1b72e61-99a7-4ecf-b214-1eecfcb14e70"
-        splunk-url: "https://prd-p-a598i.splunkcloud.com:8088/services/collector"
+        splunk-url: "https://prd-p-a598i.splunkcloud.com:8088"
         splunk-insecureskipverify: "true"
 
 volumes:
