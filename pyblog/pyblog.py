@@ -4,6 +4,7 @@
 import os
 import re
 import requests
+import argparse
 from requests.auth import HTTPBasicAuth
 from datetime import datetime
 
@@ -106,8 +107,31 @@ def blog_menu():
             break       
 
 
+def parse_arguements():
+    # Initialize parser
+    parser = argparse.ArgumentParser()
+ 
+    # Adding optional argument
+    parser.add_argument("--menu", help="Launches the blog posting interactive menu")
+    parser.add_argument("--latest", help="Gets the latest post", action="store_true")
+    parser.add_argument("--post", help="Make a new post from a file", type=str)
+ 
+    # Read arguments from command line
+    args = parser.parse_args()
+ 
+    if args.menu:
+        blog_menu()
+    elif args.latest:
+        print("latest post")
+    elif args.post:
+        print("Post a new Post from: " + args.post)
+    else:
+        print("no arguements passed")
+    
+
 # get_post_titles()
 # get_post_content(0)
 # post_post()
 # print(read_file("/home/rknepper/edgepost"))
 # blog_menu()
+parse_arguements()
