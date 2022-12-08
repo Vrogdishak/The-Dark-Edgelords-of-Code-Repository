@@ -11,6 +11,12 @@ services:
        MYSQL_DATABASE: wordpress
        MYSQL_USER: wordpress
        MYSQL_PASSWORD: wordpress
+     logging:
+       driver: "splunk"
+       options:
+        splunk-token: "f1b72e61-99a7-4ecf-b214-1eecfcb14e70"
+        splunk-url: "https://prd-p-a598i.splunkcloud.com:8088/services/collector"
+        splunk-insecureskipverify: "true"
 
    wordpress:
      depends_on:
@@ -29,6 +35,13 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         /* SETTING ENV TYPE */
         define( 'WP_ENVIRONMENT_TYPE', 'local' );
+     logging:
+      driver: "splunk"
+      options:
+        splunk-token: "f1b72e61-99a7-4ecf-b214-1eecfcb14e70"
+        splunk-url: "https://prd-p-a598i.splunkcloud.com:8088/services/collector"
+        splunk-insecureskipverify: "true"
+
 volumes:
     db_data: {}
     www_data: {}
