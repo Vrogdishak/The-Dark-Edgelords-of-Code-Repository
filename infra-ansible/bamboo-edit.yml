@@ -1,0 +1,28 @@
+---
+- name: Deploy Bamboo
+  hosts: infra
+
+  tasks:
+  - name: Create Volume
+    become: yes
+    community.docker.docker_volume:
+      name: bambooVolume
+      state: present
+
+  - name:
+    community.docker.docker_container:
+      become: yes
+      name: bamboo
+      image: jrrickerson/capstone-bamboo
+      state: started
+      detach: true
+      groups: 
+        - docker
+        - 115
+      restart_policy: always
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - bambooVolume:/var/atlassian/application-data/bamboo
+      ports:
+        - "54663:54663"
+        - "8085:8085"
