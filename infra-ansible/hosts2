@@ -1,6 +1,0 @@
-[infra]
-ec2-3-84-17-215.compute-1.amazonaws.com
-
-[all:vars]
-ansible_ssh_private_key_file= # PEM FILE LOCATION HERE #
-ansible_user=ubuntu
