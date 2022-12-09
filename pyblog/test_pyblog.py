@@ -34,10 +34,5 @@ def test_read_file():
 def test_blog_menu():
     pass
 
-
 def test_parse_arguements():
-    result = parse_arguements()
-    if result is None:
-        assert True
-    else:
-        assert False
+    pass
